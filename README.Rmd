@@ -1,0 +1,71 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# comvlong
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: end -->
+
+The goal of long is to ...
+
+[Commonwealth v. Long](https://law.justia.com/cases/massachusetts/supreme-court/2020/sjc-12868.html)
+
+## Installation
+
+You can install the development version of comvlong from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("beanumber/comvlong")
+```
+
+## Boston Police citations
+
+```{r example, message=FALSE}
+library(tidyverse)
+library(comvlong)
+```
+
+The following table displays summary statistics for the citation data in the `boston_pd_1120` data frame. 
+
+```{r}
+boston_pd_1120 |>
+  group_by(issuing_agency) |>
+  summarize(
+    num_citations = n(),
+    begin_date = min(event_date),
+    end_date = max(event_date),
+    num_officers = n_distinct(officer_id),
+    num_offenses = n_distinct(offense)
+  ) |>
+  knitr::kable()
+```
+
+## Weighted disparity
+
+```{r}
+obj <- weighted_disparity(comvlong::cites_sp, 4131)
+obj[-3]
+```
+
+```{r}
+sims <- simulate_officer_citations(n_sims = 10000)
+y_hat <- observe_officer()
+y_hat
+p_value_officer(sims, y_hat)
+visualize_weighted_disparity(sims, y_hat)
+```
+

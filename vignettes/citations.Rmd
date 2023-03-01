@@ -1,0 +1,33 @@
+---
+title: "citations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{citations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, message=FALSE}
+library(dplyr)
+library(comvlong)
+```
+
+
+```{r}
+boston_pd_1120 |>
+  summarize(
+    num_citations = n(),
+    num_officers = n_distinct(officer_id),
+    num_races = n_distinct(race),
+    num_towns = n_distinct(location_name),
+    begin_date = min(event_date),
+    end_date = max(event_date)
+  )
+```
