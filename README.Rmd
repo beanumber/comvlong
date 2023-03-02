@@ -57,12 +57,11 @@ boston_pd_1120 |>
 ## Weighted disparity
 
 ```{r}
-obj <- weighted_disparity(comvlong::cites_sp, 4131)
-obj[-3]
-```
-
-```{r}
-sims <- simulate_officer_citations(n_sims = 10000)
+sims <- simulate_officer_citations(
+  n_sims = 10000, 
+  my_officer_id = 9047, 
+  race_of_interest = "BLACK"
+)
 y_hat <- observe_officer()
 y_hat
 p_value_officer(sims, y_hat)

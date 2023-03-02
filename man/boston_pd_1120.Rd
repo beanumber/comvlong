@@ -5,7 +5,7 @@
 \alias{boston_pd_1120}
 \title{WokeWindows citations}
 \format{
-An object of class \code{spec_tbl_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 328141 rows and 44 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 328141 rows and 45 columns.
 }
 \source{
 \url{https://www.wokewindows.org/exports}

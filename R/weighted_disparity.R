@@ -1,3 +1,10 @@
+globalVariables(
+  c("officer_id", "location_name", "event_date", "disparity",
+    "n", "p_0", "alpha", "n_sim", "p_sim", "disparity_sim",
+    "is_my_officer", "race", "cites_0", "n_0", "cites", 
+    "disparity_wgt_sim", "p_hat")
+)
+
 #' Weighted disparity measures for police officers
 #' @param citations \code{\link{data.frame}} of police citations
 #' @param my_officer_id identifier for the officer in question
