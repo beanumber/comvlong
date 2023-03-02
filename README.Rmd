@@ -56,7 +56,7 @@ boston_pd_1120 |>
 
 ## Weighted disparity
 
-```{r}
+```{r sim-wgt-disparity}
 sims <- simulate_officer_citations(
   n_sims = 10000, 
   my_officer_id = 9047, 

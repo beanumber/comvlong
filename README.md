@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# long
+# comvlong
 
 <!-- badges: start -->
 
@@ -11,21 +11,24 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 
 The goal of long is to …
 
+[Commonwealth v.
+Long](https://law.justia.com/cases/massachusetts/supreme-court/2020/sjc-12868.html)
+
 ## Installation
 
-You can install the development version of long from
+You can install the development version of comvlong from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("beanumber/long")
+# install.packages("remotes")
+remotes::install_github("beanumber/comvlong")
 ```
 
 ## Boston Police citations
 
 ``` r
 library(tidyverse)
-library(long)
+library(comvlong)
 ```
 
 The following table displays summary statistics for the citation data in
@@ -73,38 +76,20 @@ boston_pd_1120 |>
 ## Weighted disparity
 
 ``` r
-obj <- weighted_disparity(long::cites_sp, 4131)
-obj[-3]
-#> [[1]]
-#> [1] 0.005924856
-#> 
-#> [[2]]
-#> [1] 0.6511
-#> 
-#> [[3]]
-#> # A tibble: 18 × 6
-#>    Location.Name    n1    n2      p1     p2    y_piece
-#>    <chr>         <int> <int>   <dbl>  <dbl>      <dbl>
-#>  1 Ashfield         28     1 0       0       0        
-#>  2 Athol           638     4 0.0408  0       0.000508 
-#>  3 Bernardston     513    22 0.0741  0.0455  0.00196  
-#>  4 Buckland         24     1 0       0       0        
-#>  5 Colrain          14     1 0       0       0        
-#>  6 Deerfield      2501   194 0.0672  0.0567  0.00633  
-#>  7 Erving           93     2 0.0108  0       0.0000670
-#>  8 Gill            172     4 0.0233  0       0.000290 
-#>  9 Greenfield     2438    73 0.0595  0.0548  0.00106  
-#> 10 Heath             4     1 0       0       0        
-#> 11 Hubbardston      10     1 0       0       0        
-#> 12 Northampton    1707     1 0.0955  0       0.000297 
-#> 13 Orange          252     2 0.0516  0       0.000321 
-#> 14 Phillipston    1196     2 0.0426  0       0.000266 
-#> 15 Rutland          25     1 0       0       0        
-#> 16 Shelburne       241     6 0.00830 0       0.000155 
-#> 17 Templeton      3663     3 0.0511  0.333  -0.00264  
-#> 18 Whately         981     2 0.0673  0.5    -0.00270  
-#> 
-#> [[4]]
+sims <- simulate_officer_citations(
+  n_sims = 10000, 
+  my_officer_id = 9047, 
+  race_of_interest = "BLACK"
+)
+y_hat <- observe_officer()
+y_hat
+#> [1] -0.05153606
+p_value_officer(sims, y_hat)
+#> # A tibble: 1 × 1
+#>   p_value
+#>     <dbl>
+#> 1  0.0012
+visualize_weighted_disparity(sims, y_hat)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-sim-wgt-disparity-1.png" width="100%" />
