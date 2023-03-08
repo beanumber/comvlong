@@ -30,12 +30,16 @@ boston_pd_1120 <- boston_pd_1120 |>
       race == "asian" ~ "ASIAN",
       race == "UNK" ~ "UNKNWN",
       TRUE ~ race)
-  )
+  ) |>
+  rename(disposition_desc = disposition_desc_15) |>
+  select(-c(disposition_desc_40, race)) |>
+  sample_n(150000)
+  
 
 boston_pd_1120 %>%
   group_by(race_clean) %>%
   summarize(N = n()) |>
   arrange(desc(N))
 
-# 4.2 MB
+# 2.8 MB
 usethis::use_data(boston_pd_1120, overwrite = TRUE)
