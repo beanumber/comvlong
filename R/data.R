@@ -1,5 +1,6 @@
-#' WokeWindows citations
+#' Citations from Boston Police
 #' @docType data
+#' @description aldjfaposdj
 #' @format
 #' An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 43 columns.
 #' \describe{
@@ -8,8 +9,8 @@
 #'   \item{officer_id}{Unique identifier for BPD offficers. a character vector.}
 #'   \item{officer_name}{The name of the issuing officer.}
 #'   \item{event_date}{Year-Month-Day.}
-#'   \item{time_hh}{Hour of incident.}
-#'   \item{time_mm}{Minute of incident.}
+#'   \item{time_hh}{Hour of incident, converted to integer type.}
+#'   \item{time_mm}{Minute of incident, converted to integer type.}
 #'   \item{am_pm}{Whether the citation occurred in before midday or after midday.}
 #'   \item{viol_type}{The type of violator. Owner, operator, passenger, or bike.}
 #'   \item{citation_number}{"unique identifier for the citation; the same number will appear multiple times in the spreadsheet if the ticket is for multiple offenses." (Woke Windows)}
@@ -45,17 +46,20 @@
 #'     \item{radar}{Type of radar used to check speed.}
 #'     \item{clocked}{NA, "UNK", "CLOCK", or "EST".}
 #'     \item{officer_cert}{Likely how the citation was served on the violator.}
-#'     \item{race}{The race of the violator.}
+#'     \item{race}{The race of the violator. Duplicate race codings were combined, and some race codings were reformatted.}
+#'     \item{time}{An hms object in which second has been set to 00 for all non-NA hour-minute observations. Minute was set to 0 if hour was not NA.}
 #'}
 #' @source \url{https://www.wokewindows.org/exports}
 #' @source \url{https://github.com/nstory/boston_pd_citations}
 "boston_pd_1120"
 
+#' Court Codes
 #' @docType data
+#' @description Table of Massachusetts state court codes and their corresponding courts.
 #' @format
 #' An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 174 rows and 2 columns.
 #' \describe{
-#'   \item{court_code}{Massachusetts court codes.}
+#'   \item{court_code}{Massachusetts court codes. Mutated from original table so that prefixes align with codes in Boston Police dataset.}
 #'   \item{court}{The court corresponding to a court code.}
 #' }
 #' @source \url{https://www.mass.gov/info-details/trial-court-codes-numerical-listing}

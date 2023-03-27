@@ -3,7 +3,7 @@
 \docType{data}
 \name{boston_pd_1120}
 \alias{boston_pd_1120}
-\title{WokeWindows citations}
+\title{Citations from Boston Police}
 \format{
 An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 43 columns.
 \describe{
@@ -12,8 +12,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \item{officer_id}{Unique identifier for BPD offficers. a character vector.}
 \item{officer_name}{The name of the issuing officer.}
 \item{event_date}{Year-Month-Day.}
-\item{time_hh}{Hour of incident.}
-\item{time_mm}{Minute of incident.}
+\item{time_hh}{Hour of incident, converted to integer type.}
+\item{time_mm}{Minute of incident, converted to integer type.}
 \item{am_pm}{Whether the citation occurred in before midday or after midday.}
 \item{viol_type}{The type of violator. Owner, operator, passenger, or bike.}
 \item{citation_number}{"unique identifier for the citation; the same number will appear multiple times in the spreadsheet if the ticket is for multiple offenses." (Woke Windows)}
@@ -49,7 +49,8 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \item{radar}{Type of radar used to check speed.}
 \item{clocked}{NA, "UNK", "CLOCK", or "EST".}
 \item{officer_cert}{Likely how the citation was served on the violator.}
-\item{race}{The race of the violator.}
+\item{race}{The race of the violator. Duplicate race codings were combined, and some race codings were reformatted.}
+\item{time}{An hms object in which second has been set to 00 for all non-NA hour-minute observations. Minute was set to 0 if hour was not NA.}
 }
 }
 \source{
@@ -61,6 +62,6 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 boston_pd_1120
 }
 \description{
-WokeWindows citations
+aldjfaposdj
 }
 \keyword{datasets}
