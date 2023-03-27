@@ -5,7 +5,7 @@
 \alias{boston_pd_1120}
 \title{Citations from Boston Police}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 43 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 44 columns.
 \describe{
 \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 \item{agency_code}{Shorthand code for issuing agency. a character vector.}
@@ -62,6 +62,6 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 boston_pd_1120
 }
 \description{
-aldjfaposdj
+A sample of Boston Police traffic citations from January 2011 to January 2021.
 }
 \keyword{datasets}

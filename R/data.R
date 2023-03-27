@@ -1,8 +1,8 @@
 #' Citations from Boston Police
 #' @docType data
-#' @description aldjfaposdj
+#' @description A sample of Boston Police traffic citations from January 2011 to January 2021.
 #' @format
-#' An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 43 columns.
+#' An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 44 columns.
 #' \describe{
 #'   \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 #'   \item{agency_code}{Shorthand code for issuing agency. a character vector.}
