@@ -7,6 +7,7 @@ library(tidyverse)
 library(rio)
 library(here)
 library(hms)
+library(lubridate)
 
 # Download Police Data -----------------------------------------------------------
 
@@ -46,7 +47,7 @@ boston_pd_1120 <- boston_pd_1120 |>
                              TRUE ~ time_hh),
          minute = ifelse(!is.na(hour) & is.na(time_mm), 0, time_mm),
          second = ifelse(is.na(hour), NA, 0),
-         time = hms(seconds = second, minutes = minute, hours = hour)
+         time = hms::hms(seconds = second, minutes = minute, hours = hour)
   ) |>
   select(-c(hour, minute, second))
 
@@ -86,8 +87,10 @@ boston_pd_1120 |>
   arrange(desc(N))
 
 # sample the data
+# boston_pd_1120 <- boston_pd_1120 |>
+#   sample_n(150000)
 boston_pd_1120 <- boston_pd_1120 |>
-  sample_n(150000)
+  filter(year(event_date) %in% c(2011, 2012, 2013, 2014, 2015))
 
 # 2.8 MB
 usethis::use_data(boston_pd_1120, overwrite = TRUE)
@@ -109,3 +112,9 @@ court_codes <- court_codes |>
   
 
 usethis::use_data(court_codes, overwrite = TRUE)
+
+years <- boston_pd_1120 |>
+  mutate(year = lubridate::year(event_date)) |>
+  group_by(year) |>
+  summarize(count = n()) |>
+  arrange(year)

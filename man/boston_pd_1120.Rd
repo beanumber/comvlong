@@ -5,7 +5,7 @@
 \alias{boston_pd_1120}
 \title{Citations from Boston Police}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 150000 rows and 44 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 194,462 rows and 44 columns.
 \describe{
 \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 \item{agency_code}{Shorthand code for issuing agency. a character vector.}
@@ -18,7 +18,7 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \item{viol_type}{The type of violator. Owner, operator, passenger, or bike.}
 \item{citation_number}{"unique identifier for the citation; the same number will appear multiple times in the spreadsheet if the ticket is for multiple offenses." (Woke Windows)}
 \item{citation_type}{Can be civil, criminal, or arrest.}
-\item{offense}{"code for an offense; seems to correspond to a section in the Massachusetts General Laws e.g. '90160' is MGL c.90 §16" (Woke Windows).}
+\item{offense}{"code for an offense; seems to correspond to a section in the \href{https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section16}{Massachusetts General Laws} e.g. '90160' is MGL c.90 §16" (Woke Windows).}
 \item{offense_description}{Detailed description of offense.}
 \item{disposition}{Code for result of offense.}
 \item{disposition_desc}{The description for the result of the offense, elaborates on disposition variable.}
@@ -62,6 +62,6 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 boston_pd_1120
 }
 \description{
-A sample of Boston Police traffic citations from January 2011 to January 2021.
+A sample of Boston Police traffic citations from January 2011 to December 2015.
 }
 \keyword{datasets}
