@@ -1,6 +1,6 @@
 Package: comvlong
 Title: Tools for bringing Long cases
-Version: 0.0.0.9008
+Version: 0.0.0.9009
 Authors@R: c(
     person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com", role = c("aut"), comment = c(ORCID = "0000-0002-3279-0516")),
     person("Mary", "Fowler", email = "marysantifowler@gmail.com", role = c("aut", "cre")),
@@ -12,7 +12,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 License: CC0
 Depends: 
-    R (>= 4.10)
+    R (>= 4.1)
 LazyData: true
 LazyDataCompression: bzip2
 Suggests: 
