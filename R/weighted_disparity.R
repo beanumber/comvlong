@@ -12,33 +12,26 @@ globalVariables(
 #' @param ... current ignored
 #' @export
 #' @examples
-#' compare_officer_citations(comvlong::boston_pd_1120, 9047)
+#' compare_officer_citations(my_officer_id = 9047)
 compare_officer_citations <- function(
-    citations = comvlong::boston_pd_1120,
+    citations = comvlong::bpd_stops_1120,
     my_officer_id = 9047, ...) {
-  my_officer_summary <- citations |>
-    dplyr::filter(officer_id == my_officer_id) |>
-    dplyr::group_by(location_name) |>
-    dplyr::summarize(
-      num_citations = dplyr::n(),
-      begin_date = min(event_date),
-      end_date = max(event_date)
-    )
+  my_officer_summary <- comvlong::bpd_stops_summary |>
+    dplyr::filter(officer_id == my_officer_id) 
 
   citations |>
-    dplyr::filter(
-      event_date >= min(my_officer_summary$begin_date),
-      event_date <= max(my_officer_summary$end_date),
-      location_name %in% my_officer_summary$location_name
+    semi_join(
+      my_officer_summary, 
+      join_by(location_name, between(event_date, earliest_date, latest_date))
     )
 }
 
 #' @rdname compare_officer_citations
 #' @export
 #' @examples
-#' summarize_officer_citations(comvlong::boston_pd_1120, 9047)
+#' summarize_officer_citations(comvlong::bpd_stops_1120, 9047)
 summarize_officer_citations <- function(
-    citations = comvlong::boston_pd_1120, 
+    citations = comvlong::bpd_stops_1120, 
     my_officer_id = 9047, 
     race_of_interest = "BLACK"
 ) {
@@ -68,9 +61,9 @@ summarize_officer_citations <- function(
 #' @param n_sims Number of simulations
 #' @export
 #' @examples
-#' simulate_officer_citations(comvlong::boston_pd_1120, 9047)
+#' simulate_officer_citations(comvlong::bpd_stops_1120, 9047)
 simulate_officer_citations <- function(
-    citations = comvlong::boston_pd_1120, 
+    citations = comvlong::bpd_stops_1120, 
     my_officer_id = 9047, 
     race_of_interest = "BLACK", 
     n_sims = 100
@@ -98,10 +91,10 @@ simulate_officer_citations <- function(
 #' @rdname compare_officer_citations
 #' @export
 #' @examples
-#' observe_officer(comvlong::boston_pd_1120, 9047, race_of_interest = "BLACK")
-#' observe_officer(comvlong::boston_pd_1120, 9047, race_of_interest = "WHITE")
+#' observe_officer(comvlong::bpd_stops_1120, 9047, race_of_interest = "BLACK")
+#' observe_officer(comvlong::bpd_stops_1120, 9047, race_of_interest = "WHITE")
 observe_officer <- function(
-    citations = comvlong::boston_pd_1120, 
+    citations = comvlong::bpd_stops_1120, 
     my_officer_id = 9047, 
     race_of_interest = "BLACK"
 ) {

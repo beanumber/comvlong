@@ -10,26 +10,26 @@
 \title{Weighted disparity measures for police officers}
 \usage{
 compare_officer_citations(
-  citations = comvlong::boston_pd_1120,
+  citations = comvlong::bpd_stops_1120,
   my_officer_id = 9047,
   ...
 )
 
 summarize_officer_citations(
-  citations = comvlong::boston_pd_1120,
+  citations = comvlong::bpd_stops_1120,
   my_officer_id = 9047,
   race_of_interest = "BLACK"
 )
 
 simulate_officer_citations(
-  citations = comvlong::boston_pd_1120,
+  citations = comvlong::bpd_stops_1120,
   my_officer_id = 9047,
   race_of_interest = "BLACK",
   n_sims = 100
 )
 
 observe_officer(
-  citations = comvlong::boston_pd_1120,
+  citations = comvlong::bpd_stops_1120,
   my_officer_id = 9047,
   race_of_interest = "BLACK"
 )
@@ -57,11 +57,11 @@ visualize_weighted_disparity(data, y_hat)
 Weighted disparity measures for police officers
 }
 \examples{
-compare_officer_citations(comvlong::boston_pd_1120, 9047)
-summarize_officer_citations(comvlong::boston_pd_1120, 9047)
-simulate_officer_citations(comvlong::boston_pd_1120, 9047)
-observe_officer(comvlong::boston_pd_1120, 9047, race_of_interest = "BLACK")
-observe_officer(comvlong::boston_pd_1120, 9047, race_of_interest = "WHITE")
+compare_officer_citations(my_officer_id = 9047)
+summarize_officer_citations(comvlong::bpd_stops_1120, 9047)
+simulate_officer_citations(comvlong::bpd_stops_1120, 9047)
+observe_officer(comvlong::bpd_stops_1120, 9047, race_of_interest = "BLACK")
+observe_officer(comvlong::bpd_stops_1120, 9047, race_of_interest = "WHITE")
 sims <- simulate_officer_citations()
 y_hat <- observe_officer()
 p_value_officer(sims, y_hat)

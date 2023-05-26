@@ -16,26 +16,26 @@ download.file(url, dest)
 # Clean Police Data --------------------------------------------------------------
 
 # initial name cleaning
-boston_pd_offenses <- dest |>
+raw <- dest |>
   read_csv() |>
   janitor::clean_names()
 
 # manual name cleaning
-boston_pd_offenses <- boston_pd_offenses |>
+offenses <- raw |>
   rename(disposition_desc = disposition_desc_15, sixteen_pass = x16pass) |>
   select(-c(disposition_desc_40))
 
-codes <- boston_pd_offenses |>
+codes <- offenses |>
   group_by(court_code) |>
   summarize(count = n())
 
 # change so court code for J6 is consistent
-boston_pd_offenses <- boston_pd_offenses |>
+offenses <- offenses |>
   mutate(court_code = ifelse(court_code == "CT_J06", "CT_J6", court_code))
 
 # convert PM hours to 24-hour time hours... holding off on further analysis
 # until I know what to do with weird times.
-boston_pd_offenses <- boston_pd_offenses |>
+offenses <- offenses |>
   mutate(
     time_hh = as.integer(time_hh),
     time_mm = as.integer(time_mm),
@@ -52,24 +52,24 @@ boston_pd_offenses <- boston_pd_offenses |>
 
 # times are not always documented. Also it is difficult to know what hour
 # 0 means. Is this 12am or lazy police not entering a time?
-times <- boston_pd_offenses |>
+times <- offenses |>
   group_by(time_hh, time_mm, am_pm) |>
   summarize(count = n())
 
 # are dates always documented? Yes.
-dates <- boston_pd_offenses |>
+dates <- offenses |>
   group_by(event_date) |>
   summarize(count = n()) |>
   arrange(desc(count))
 
 # how many people of each race?
-boston_pd_offenses |>
+offenses |>
   group_by(race) |>
   summarize(N = n()) |>
   arrange(desc(N))
 
 # clean up race variable
-boston_pd_offenses <- boston_pd_offenses |>
+offenses <- offenses |>
   mutate(
     race = case_when(
       race == "white" ~ "WHITE",
@@ -80,7 +80,7 @@ boston_pd_offenses <- boston_pd_offenses |>
   )
   
 # what about after cleaning?
-boston_pd_offenses |>
+offenses |>
   group_by(race) |>
   summarize(N = n()) |>
   arrange(desc(N))
@@ -91,7 +91,7 @@ boston_pd_offenses |>
 
 ## We want stops, not offenses
 
-bad <- boston_pd_offenses |>
+bad <- offenses |>
   group_by(citation_number) |>
   summarize(
     num_offenses = n(),
@@ -112,19 +112,19 @@ bad <- boston_pd_offenses |>
       num_officer_id > 1 | num_dates > 1
   )
 
-good <- boston_pd_offenses |>
+good <- offenses |>
   anti_join(bad, by = "citation_number")
 
 
 # Condense into stops, not offenses
 
-boston_pd_stops <- good |>
+bpd_stops_1120 <- good |>
   group_by(citation_number, officer_id, event_date, location_name, race) |>
   summarize(
     num_offenses = n()
   )
 
-usethis::use_data(boston_pd_stops, overwrite = TRUE)
+usethis::use_data(bpd_stops_1120, overwrite = TRUE)
 
 # Sampling ----------------------------------------------
 
@@ -132,15 +132,53 @@ usethis::use_data(boston_pd_stops, overwrite = TRUE)
 # sample the data
 # boston_pd_offenses <- boston_pd_offenses |>
 #   sample_n(150000)
-boston_pd_offenses <- boston_pd_offenses |>
-  filter(year(event_date) %in% c(2011, 2012, 2013, 2014))
+bpd_offenses_20 <- offenses |>
+  filter(year(event_date) %in% c(2020))
 
 # 1.9 MB
-usethis::use_data(boston_pd_offenses, overwrite = TRUE)
+usethis::use_data(bpd_offenses_20, overwrite = TRUE)
 
 
-boston_pd_offenses |>
+# Check summary statistics
+
+bpd_offenses_20 |>
   mutate(year = lubridate::year(event_date)) |>
   group_by(year) |>
   summarize(count = n()) |>
   arrange(year)
+
+bpd_stops_1120 |>
+  mutate(year = lubridate::year(event_date)) |>
+  group_by(year) |>
+  summarize(count = n()) |>
+  arrange(year)
+
+# Officers ------------------------------------
+
+bpd_officers <- offenses |>
+  group_by(officer_id, officer_name) |>
+  summarize(
+    num_offenses = n(),
+    num_stops = n_distinct(citation_number),
+    num_locations = n_distinct(location_name),
+    earliest_date = min(event_date),
+    latest_date = max(event_date)
+  )
+
+# 1.9 MB
+usethis::use_data(bpd_officers, overwrite = TRUE)
+
+# Officer locations ----------------------------------------------
+
+bpd_stops_summary <- bpd_stops_1120 |>
+  group_by(officer_id, location_name) |>
+  summarize(
+    num_offenses = n(),
+    num_stops = n_distinct(citation_number),
+    num_locations = n_distinct(location_name),
+    earliest_date = min(event_date),
+    latest_date = max(event_date)
+  )
+
+# 1.9 MB
+usethis::use_data(bpd_stops_summary, overwrite = TRUE)

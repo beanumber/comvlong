@@ -51,7 +51,7 @@
 #'}
 #' @source \url{https://www.wokewindows.org/exports}
 #' @source \url{https://github.com/nstory/boston_pd_citations}
-"boston_pd_1120"
+"bpd_offenses_20"
 
 #' Court Codes
 #' @docType data
@@ -65,4 +65,11 @@
 #' @source \url{https://www.mass.gov/info-details/trial-court-codes-numerical-listing}
 "court_codes"
 
+#' @docType data
+"bpd_stops_1120"
 
+#' @docType data
+"bpd_officers"
+
+#' @docType data
+"bpd_stops_summary"
