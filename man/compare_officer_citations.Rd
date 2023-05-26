@@ -34,7 +34,7 @@ observe_officer(
   race_of_interest = "BLACK"
 )
 
-p_value_officer(data, y_hat)
+p_value_officer(data, y_hat, tail_direction = "right")
 
 visualize_weighted_disparity(data, y_hat)
 }
