@@ -27,9 +27,8 @@ compare_officer_citations <- function(
 
   citations |>
     dplyr::filter(
-      # why not greater than or equal to?
-      event_date > min(my_officer_summary$begin_date),
-      event_date < max(my_officer_summary$end_date),
+      event_date >= min(my_officer_summary$begin_date),
+      event_date <= max(my_officer_summary$end_date),
       location_name %in% my_officer_summary$location_name
     )
 }
@@ -120,9 +119,9 @@ observe_officer <- function(
 #' sims <- simulate_officer_citations()
 #' y_hat <- observe_officer()
 #' p_value_officer(sims, y_hat)
-p_value_officer <- function(data, y_hat) {
+p_value_officer <- function(data, y_hat, tail_direction = "right") {
   data |>
-    infer::get_p_value(y_hat, direction = "two-sided")
+    infer::get_p_value(y_hat, direction = tail_direction)
 }
 
 #' @rdname compare_officer_citations
