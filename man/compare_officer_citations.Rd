@@ -36,7 +36,7 @@ observe_officer(
 
 p_value_officer(data, y_hat, tail_direction = "right")
 
-visualize_weighted_disparity(data, y_hat)
+visualize_weighted_disparity(data, y_hat, tail_direction = "right")
 }
 \arguments{
 \item{citations}{\code{\link{data.frame}} of police citations}

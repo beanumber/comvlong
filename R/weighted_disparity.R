@@ -123,10 +123,10 @@ p_value_officer <- function(data, y_hat, tail_direction = "right") {
 #' sims <- simulate_officer_citations(n_sims = 10000)
 #' y_hat <- observe_officer()
 #' visualize_weighted_disparity(sims, y_hat)
-visualize_weighted_disparity <- function(data, y_hat) {
+visualize_weighted_disparity <- function(data, y_hat, tail_direction = "right") {
   attr(data, "type") <- "bootstrap"
   data |>
     dplyr::mutate(stat = disparity_wgt_sim) |>
     infer::visualize() +
-    infer::shade_p_value(obs_stat = y_hat, direction = "two-sided")
+    infer::shade_p_value(obs_stat = y_hat, direction = tail_direction)
 }

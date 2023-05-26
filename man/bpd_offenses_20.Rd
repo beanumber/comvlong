@@ -5,7 +5,18 @@
 \alias{bpd_offenses_20}
 \title{Citations from Boston Police}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 42,993 rows and 44 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 42993 rows and 44 columns.
+}
+\source{
+\url{https://www.wokewindows.org/exports}
+
+\url{https://github.com/nstory/boston_pd_citations}
+}
+\usage{
+bpd_offenses_20
+}
+\description{
+A complete set of Boston Police traffic citations from 2020.
 \describe{
 \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 \item{agency_code}{Shorthand code for issuing agency. a character vector.}
@@ -52,17 +63,6 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 \item{race}{The race of the violator. Duplicate race codings were combined, and some race codings were reformatted.}
 \item{time}{An hms object in which second has been set to 00 for all non-NA hour-minute observations. Minute was set to 0 if hour was not NA.}
 }
-}
-\source{
-\url{https://www.wokewindows.org/exports}
-
-\url{https://github.com/nstory/boston_pd_citations}
-}
-\usage{
-bpd_offenses_20
-}
-\description{
-A complete set of Boston Police traffic citations from 2020.
 }
 \seealso{
 Other Boston Police data: 

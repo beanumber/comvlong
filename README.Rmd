@@ -39,10 +39,10 @@ library(tidyverse)
 library(comvlong)
 ```
 
-The following table displays summary statistics for the citation data in the `boston_pd_1120` data frame. 
+The following table displays summary statistics for the citation data in the `bpd_offenses_20` data frame. 
 
 ```{r}
-boston_pd_1120 |>
+bpd_offenses_20 |>
   group_by(issuing_agency) |>
   summarize(
     num_citations = n(),
