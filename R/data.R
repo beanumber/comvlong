@@ -1,8 +1,6 @@
 #' Citations from Boston Police
 #' @docType data
-#' @description A sample of Boston Police traffic citations from January 2011 to December 2015.
-#' @format
-#' An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 194,462 rows and 44 columns.
+#' @description A complete set of Boston Police traffic citations from 2020.
 #' \describe{
 #'   \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 #'   \item{agency_code}{Shorthand code for issuing agency. a character vector.}
@@ -51,6 +49,7 @@
 #'}
 #' @source \url{https://www.wokewindows.org/exports}
 #' @source \url{https://github.com/nstory/boston_pd_citations}
+#' @family Boston Police data
 "bpd_offenses_20"
 
 #' Court Codes
@@ -65,11 +64,30 @@
 #' @source \url{https://www.mass.gov/info-details/trial-court-codes-numerical-listing}
 "court_codes"
 
+#' Boston Police Department traffic stops, 2011-2020
 #' @docType data
+#' @description
+#' About 240,000 valid traffic stops made by the Boston Police Department
+#' from 2011 to 2020. These data are culled and cleaned from the full database of over
+#' 320,000 traffic citations made during these stops. 
+#' 
+#' @family Boston Police data
 "bpd_stops_1120"
 
+#' Boston Police Department officers, 2011-2020
 #' @docType data
+#' @description
+#' A lookup table for all police officers in the Boston Police Department.
+#' 
+#' 
+#' @family Boston Police data
 "bpd_officers"
 
+#' Summary of Boston Police Department traffic stops by officer and location, 2011-2020
 #' @docType data
+#' @description
+#' A summary table of traffic stops grouped by officer and location. 
+#' These data feed directly into the \link{visualize_weighted_disparity} calculations.
+#' 
+#' @family Boston Police data
 "bpd_stops_summary"

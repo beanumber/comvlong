@@ -5,7 +5,7 @@
 \alias{bpd_offenses_20}
 \title{Citations from Boston Police}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 194,462 rows and 44 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 42,993 rows and 44 columns.
 \describe{
 \item{issuing_agency}{Boston Police division that issuing officer belongs to. a character vector.}
 \item{agency_code}{Shorthand code for issuing agency. a character vector.}
@@ -62,6 +62,13 @@ An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) w
 bpd_offenses_20
 }
 \description{
-A sample of Boston Police traffic citations from January 2011 to December 2015.
+A complete set of Boston Police traffic citations from 2020.
 }
+\seealso{
+Other Boston Police data: 
+\code{\link{bpd_officers}},
+\code{\link{bpd_stops_1120}},
+\code{\link{bpd_stops_summary}}
+}
+\concept{Boston Police data}
 \keyword{datasets}
