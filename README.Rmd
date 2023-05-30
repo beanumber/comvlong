@@ -47,7 +47,7 @@ These data were included in [The Woke Windows Project](https://www.wokewindows.o
 
 The `comvlong` package contains:
 
-* `download_bdp_offenses()`: a function to download the full 10-year dataset
+* `download_bpd_offenses()`: a function to download the full 10-year dataset
 * `bpd_offenses_20`: a complete set of offenses for only the year 2020
 * `bpd_stops_1120`: a cleaned set of 10 years worth of *stops* (aggregated from the offenses)
 * several ancillary tables

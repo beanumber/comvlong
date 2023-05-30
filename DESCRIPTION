@@ -23,6 +23,8 @@ VignetteBuilder: knitr
 Imports: 
     dplyr,
     infer,
+    janitor,
     purrr,
+    readr,
     tidyr
 Config/testthat/edition: 3
