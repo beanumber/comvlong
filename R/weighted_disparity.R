@@ -2,7 +2,7 @@ globalVariables(
   c("officer_id", "location_name", "event_date", "disparity",
     "n", "p_0", "alpha", "n_sim", "p_sim", "disparity_sim",
     "is_my_officer", "race", "cites_0", "n_0", "cites", 
-    "disparity_wgt_sim", "p_hat")
+    "disparity_wgt_sim", "p_hat", "earliest_date", "latest_date")
 )
 
 #' Weighted disparity measures for police officers
@@ -10,6 +10,7 @@ globalVariables(
 #' @param my_officer_id identifier for the officer in question
 #' @param race_of_interest race of defendant. Default is \code{BLACK}
 #' @param ... current ignored
+#' @importFrom dplyr join_by between
 #' @export
 #' @examples
 #' compare_officer_citations(my_officer_id = 9047)
@@ -20,7 +21,7 @@ compare_officer_citations <- function(
     dplyr::filter(officer_id == my_officer_id) 
 
   citations |>
-    semi_join(
+    dplyr::semi_join(
       my_officer_summary, 
       join_by(location_name, between(event_date, earliest_date, latest_date))
     )
@@ -107,6 +108,8 @@ observe_officer <- function(
 #' @rdname compare_officer_citations
 #' @param data A \code{\link{data.frame}} of draws from the bootstrap distribution
 #' @param y_hat The observed weighted disparity
+#' @param tail_direction argument passed to \code{\link[infer]{get_p_value}} and 
+#' \code{\link[infer]{shade_p_value}}
 #' @export
 #' @examples
 #' sims <- simulate_officer_citations()

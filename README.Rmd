@@ -1,5 +1,6 @@
 ---
 output: github_document
+bibliography: refs.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -19,25 +20,36 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of long is to ...
+The goal of **comvlong** is to facilitate the computation of a **weighted disparity metric** for police officers, which could be used in criminal proceedings under the guidance provided by the Massachusetts Supreme Judicial Court in [*Commonwealth v. Long*](https://law.justia.com/cases/massachusetts/supreme-court/2020/sjc-12868.html). 
+Please see @vanderwerken2023 for more information. 
 
-[Commonwealth v. Long](https://law.justia.com/cases/massachusetts/supreme-court/2020/sjc-12868.html)
+
 
 ## Installation
 
-You can install the development version of comvlong from [GitHub](https://github.com/) with:
+You can install the development version of **comvlong** from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
 remotes::install_github("beanumber/comvlong")
 ```
 
-## Boston Police citations
+## Boston Police Department citations
 
 ```{r example, message=FALSE}
 library(tidyverse)
 library(comvlong)
 ```
+
+In March 2021, attorney Joshua Raisler Cohn of the [Roxbury Defenders Unit](https://www.publiccounsel.net/dir/roxbury-dist-pd/) made a public records request to the Boston Police Department for 10 years' worth of citation data. 
+These data were included in [The Woke Windows Project](https://www.wokewindows.org/) and in [`nstory`'s GitHub repository](https://github.com/nstory/boston_pd_citations). 
+
+The `comvlong` package contains:
+
+* `download_bdp_offenses()`: a function to download the full 10-year dataset
+* `bpd_offenses_20`: a complete set of offenses for only the year 2020
+* `bpd_stops_1120`: a cleaned set of 10 years worth of *stops* (aggregated from the offenses)
+* several ancillary tables
 
 The following table displays summary statistics for the citation data in the `bpd_offenses_20` data frame. 
 
@@ -54,7 +66,75 @@ bpd_offenses_20 |>
   knitr::kable()
 ```
 
+The table below shows the first few rows of the `bpd_stops_1120` table.
+
+```{r}
+bpd_stops_1120
+```
+
+While the Boston Police Department can be used for many purposes, our goal is to use these to illustrate how the **weighted disparity measure** can be used in court proceedings to support a claim of racial bias against an individual police officer. 
+
 ## Weighted disparity
+
+Let $n_{ij}$ be the number of stops made by officer $i \in I$ in location $j$, over some duration of time, and let $p_{ij}(r)$ be the proportion of those $n_{ij}$ stops in which the person who was stopped was identified as having race $r$. 
+The goal of the **weighted disparity measure** is to contextualize the proportion $p_{ij}(r)$ in relation to officer $i$'s peers. 
+More specifically, if it were officer $i$'s peers (in the set $I$) who had made those $n_{ij}$ stops in the same locations during the same periods of time, what proportion of those stops would likely be of people whose race is identified as $r$? 
+
+Since officer $i$'s patrol locations vary, as do the demographics of each location $j$, we define $w_{ij}$ to be a *weight* -- the proportion of stops made by officer $i$ in each location $j$:
+$$
+  w_{ij} = \frac{n_{ij}}{\sum_{j \in J} n_{ij}}, 
+$$
+where $J$ is the set of all locations. 
+Note that $\sum_{j \in J} w_{ij} = 1$. 
+
+Then for all officers **other than** officer $i$ patrolling location $j$, they stop people of race $r$ as:
+$$
+  p_{ij}^*(r) = \sum_{k \neq i, k \in I} \frac{n_{kj}(r)}{n_{kj}} \,,
+$$
+The difference $d_{ij}(r) = p_{ij}(r) - p_{ij}^*(r)$ is the *disparity* between the behavior of officer $i$ relative to the other officers who patrol location $j$, with respect to race $r$. 
+If $d_{ij}(r) > 0$, then officer $i$ has stopped people of race $r$ in location $j$ more often than his peers.
+
+The weighted disparity measure $x_{ij}(r)$ is the weighted average of officer $i$'s disparity measures across all locations:
+
+$$
+  x_{ij}(r) = \sum_{j \in J} w_{ij} \cdot d_{ij}(r) \,.
+$$
+A positive weighted disparity measure implies that officer $i$ stopped people of $r$ more often than his peers, after controlling for the locations of the stops. 
+
+### Inference
+
+An individual weighted disparity measure can be contextualize under a simulated null distribution. 
+If officer $i$ exhibited the same behavior as his peers, then we would expect him to stop people of race $r$ in the same proportion as his peers, after controlling for location. 
+Thus, our null hypothesis is that $p_{ij}(r) = p_{ij}^*(r)$, and therefore:
+$$
+  \mathbb{E}[x_{ij}(r)] = 0 \,.
+$$
+We simulate a null distribution for $w_{ij}(r)$ by taking $n_{ij}$ random draws from a binomial distribution with proportion $p_{ij}^*(r)$ for each $j \in J$, and computing the resulting simulated weighted disparity measure as above.
+This null distribution is centered at 0, the hypothesized mean disparity. 
+A one-side test with a small p-value provides evidence against the null hypothesis that officer $i$'s behavior is indistinguishable from that of his peers. 
+
+### Example
+
+Consider officer 9047. 
+
+```{r obs-stat}
+stops_9047 <- summarize_officer_citations(my_officer_id = 9047)
+stops_9047
+sum(stops_9047$n)
+```
+
+According to the data, he made a total `r sum(stops_9047$n)` stops across `r nrow(stops_9047)` towns. 
+Although he stopped drivers identified as `BLACK` at higher rates than his colleagues in Boston, Charlestown, and West Roxbury, he stopped drivers identified as `BLACK` at lower rates in other towns. 
+
+Officer 9047's weighted disparity measure is below zero, indicating that he did not stop `BLACK` drivers as often as his colleagues, after controlling for location. 
+
+```{r}
+x_ij_BLACK <- observe_officer()
+x_ij_BLACK
+```
+
+To build a null distribution for the hypothesis that officer 9047 is no different than his colleagues, we use the `simulate_officer_citations()` function. 
+
 
 ```{r sim-wgt-disparity}
 sims <- simulate_officer_citations(
@@ -62,9 +142,13 @@ sims <- simulate_officer_citations(
   my_officer_id = 9047, 
   race_of_interest = "BLACK"
 )
-y_hat <- observe_officer()
-y_hat
-p_value_officer(sims, y_hat)
-visualize_weighted_disparity(sims, y_hat)
 ```
 
+We can then compute a p-value. 
+
+```{r p-value}
+p_value_officer(sims, x_ij_BLACK)
+visualize_weighted_disparity(sims, x_ij_BLACK)
+```
+
+## References

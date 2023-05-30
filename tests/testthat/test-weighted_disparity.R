@@ -1,9 +1,9 @@
 # boston pd data
 test_that("boston_pd_1120 works", {
-  expect_s3_class(boston_pd_1120, "tbl_df")
-  expect_s3_class(boston_pd_1120, "data.frame")
-  expect_equal(nrow(boston_pd_1120), 194462)
-  expect_equal(ncol(boston_pd_1120), 44)
+  expect_s3_class(bpd_offenses_20, "tbl_df")
+  expect_s3_class(bpd_offenses_20, "data.frame")
+  expect_equal(nrow(bpd_offenses_20), 42993)
+  expect_equal(ncol(bpd_offenses_20), 44)
 })
 # court codes
 test_that("court_codes works", {

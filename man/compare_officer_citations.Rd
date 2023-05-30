@@ -52,6 +52,9 @@ visualize_weighted_disparity(data, y_hat, tail_direction = "right")
 \item{data}{A \code{\link{data.frame}} of draws from the bootstrap distribution}
 
 \item{y_hat}{The observed weighted disparity}
+
+\item{tail_direction}{argument passed to \code{\link[infer]{get_p_value}} and
+\code{\link[infer]{shade_p_value}}}
 }
 \description{
 Weighted disparity measures for police officers
