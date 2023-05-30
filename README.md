@@ -7,12 +7,13 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/beanumber/comvlong/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/beanumber/comvlong/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of long is to facilitate the computation of a **weighted
-disparity metric** for police officers, which could be used in criminal
-proceedings under the guidance provided in the Massachusetts Supreme
-Judicial Court in [*Commonwealth v.
+The goal of **comvlong** is to facilitate the computation of a
+**weighted disparity metric** for police officers, which could be used
+in criminal proceedings under the guidance provided by the Massachusetts
+Supreme Judicial Court in [*Commonwealth v.
 Long*](https://law.justia.com/cases/massachusetts/supreme-court/2020/sjc-12868.html).
 Please see VanDerwerken, Fowler, and Kadane (2023) for more information.
 
@@ -33,15 +34,16 @@ library(tidyverse)
 library(comvlong)
 ```
 
-In March 2021, attorney Joshua Raisler Cohn of the Roxbury Defenders
-Unit made a public records request to the Boston Police Department for
-10 years’ worth of citation data. These data were included in [The Woke
-Windows Project](https://www.wokewindows.org/) and in [`nstory`’s GitHub
+In March 2021, attorney Joshua Raisler Cohn of the [Roxbury Defenders
+Unit](https://www.publiccounsel.net/dir/roxbury-dist-pd/) made a public
+records request to the Boston Police Department for 10 years’ worth of
+citation data. These data were included in [The Woke Windows
+Project](https://www.wokewindows.org/) and in [`nstory`’s GitHub
 repository](https://github.com/nstory/boston_pd_citations).
 
 The `comvlong` package contains:
 
-- `download_bdp_offenses()`: a function to download the full 10-year
+- `download_bpd_offenses()`: a function to download the full 10-year
   dataset
 - `bpd_offenses_20`: a complete set of offenses for only the year 2020
 - `bpd_stops_1120`: a cleaned set of 10 years worth of *stops*
@@ -226,7 +228,7 @@ p_value_officer(sims, x_ij_BLACK)
 #> # A tibble: 1 × 1
 #>   p_value
 #>     <dbl>
-#> 1   0.842
+#> 1   0.843
 visualize_weighted_disparity(sims, x_ij_BLACK)
 ```
 
@@ -239,8 +241,8 @@ visualize_weighted_disparity(sims, x_ij_BLACK)
 <div id="ref-vanderwerken2023" class="csl-entry">
 
 VanDerwerken, Douglas N., Mary Fowler, and Joseph B. Kadane. 2023.
-“[Making the Case of Racial Profiling: Opportunities for Statisticians
-in Legal Statistics]().” *To Be Submitted*, 1–12.
+“Making the Case of Racial Profiling: Opportunities for Statisticians in
+Legal Statistics.” *To Be Submitted*, 1–12.
 
 </div>
 
